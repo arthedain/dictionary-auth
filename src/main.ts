@@ -6,6 +6,7 @@ import { ConfigService } from '@nestjs/config';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const configService = app.get(ConfigService);
+  const port = configService.get('APP_PORT');
 
   const user = configService.get('RABBITMQ_USER');
   const password = configService.get('RABBITMQ_PASSWORD');
@@ -21,6 +22,6 @@ async function bootstrap() {
   });
 
   await app.startAllMicroservices();
-  await app.listen(3001);
+  await app.listen(port || 3001);
 }
 bootstrap();
